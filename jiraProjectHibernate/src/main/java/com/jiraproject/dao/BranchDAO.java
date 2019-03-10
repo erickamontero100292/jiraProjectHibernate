@@ -1,5 +1,8 @@
 package com.jiraproject.dao;
 
-public interface BranchDAO {
+import com.jiraproject.model.Branch;
 
+public interface BranchDAO {
+	
+	void save(Branch branch);
 }

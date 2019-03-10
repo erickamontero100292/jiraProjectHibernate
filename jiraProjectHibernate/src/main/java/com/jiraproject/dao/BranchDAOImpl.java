@@ -1,9 +1,12 @@
 package com.jiraproject.dao;
-import java.util.List;
+
+
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
+import com.jiraproject.model.Branch;
 
 public class BranchDAOImpl implements BranchDAO {
 	
@@ -12,5 +15,17 @@ public class BranchDAOImpl implements BranchDAO {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+	public void save(Branch branch) {
+		
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.save(branch);//Hibernate
+		session.persist(branch); //JPA
+		tx.commit();
+		session.close();
+
+	}
 
 }
