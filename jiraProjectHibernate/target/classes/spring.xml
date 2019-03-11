@@ -22,6 +22,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.jiraproject.model.Branch</value>
+				<value>com.jiraproject.model.TypeAssignations</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -35,6 +36,10 @@
 
 	
 	<bean id="branchDAO" class="com.jiraproject.dao.BranchDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+		<bean id="typeAssginationDAO" class="com.jiraproject.dao.TypeAssignationsDAOImpl">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</bean>
 </beans>

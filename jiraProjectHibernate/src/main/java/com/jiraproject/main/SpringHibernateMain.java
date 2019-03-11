@@ -9,7 +9,9 @@ import java.util.Date;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jiraproject.dao.BranchDAO;
+import com.jiraproject.dao.TypeAssignationsDAO;
 import com.jiraproject.model.Branch;
+import com.jiraproject.model.TypeAssignations;
 
 public class SpringHibernateMain {
 
@@ -44,11 +46,12 @@ public class SpringHibernateMain {
 		
 		switch (option) {
 		case 1:
-			System.out.println("Crear tipo de asignacion");
+			createTypeAssignations();
+			//System.out.println("Crear tipo de asignacion");
 			break;
 		case 2:
 		createBranch();
-			System.out.println("Crear branch");
+			//System.out.println("Crear branch");
 			break;
 		case 3:
 			System.out.println("Crear asignacion");
@@ -80,5 +83,25 @@ public class SpringHibernateMain {
 		context.close();
 
 	}
+	
+	public static void createTypeAssignations() {
+		Scanner value =   new Scanner(System.in);
+		String typeAssignationsName ;
+		
+		System.out.println("Introduzca el nombre del tipo de asignacion");
+		typeAssignationsName = value.nextLine();
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		
+		TypeAssignationsDAO typeAssginationDAO = context.getBean(TypeAssignationsDAO.class);
+		TypeAssignations assignations = new TypeAssignations();
+		assignations.setDescription(typeAssignationsName);
+		
+		
+		typeAssginationDAO.save(assignations);
+		System.out.println("Type Assignations - "+ assignations.toString());
+		context.close();
+
+	}
+
 
 }

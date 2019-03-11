@@ -1,28 +1,24 @@
 package com.jiraproject.dao;
 
-
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.jiraproject.model.Branch;
+import com.jiraproject.model.TypeAssignations;
 
-public class BranchDAOImpl implements BranchDAO {
-	
+public class TypeAssignationsDAOImpl implements TypeAssignationsDAO {
 	private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-	public void save(Branch branch) {
-		
+
+	public void save(TypeAssignations typeAssignation) {
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		
-		//session.save(branch);//Hibernate
-		session.persist(branch); //JPA
+		session.persist(typeAssignation);
 		tx.commit();
 		session.close();
 
