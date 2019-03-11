@@ -1,6 +1,8 @@
 package com.jiraproject.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ public class Branch implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idBranches;
 	private String description;
+	private Timestamp datecreated;
 	
 	
 	public String getDescription() {
@@ -35,10 +38,20 @@ public class Branch implements Serializable {
 	public void setIdBranches(int idBranches) {
 		this.idBranches = idBranches;
 	}
+	
+	
+	public Timestamp getDatecreated() {
+		return datecreated;
+	}
+	public void setDatecreated(Timestamp datecreated) {
+		this.datecreated = datecreated;
+	}
 	@Override
 	public String toString() {
-		return "Branch [idBranches=" + idBranches + ", description=" + description + "]";
+		return "Branch [idBranches=" + idBranches + ", description=" + description + ", datecreated=" + datecreated
+				+ "]";
 	}
+
 	
 	
 	
