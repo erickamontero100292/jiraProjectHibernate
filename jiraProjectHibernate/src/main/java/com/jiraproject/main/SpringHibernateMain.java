@@ -8,6 +8,7 @@ import java.util.Date;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jiraproject.dao.AssignationsDAO;
 import com.jiraproject.dao.BranchDAO;
 import com.jiraproject.dao.TypeAssignationsDAO;
 import com.jiraproject.model.Branch;
@@ -17,17 +18,19 @@ public class SpringHibernateMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 //		
 //		BranchDAO branchDAO = context.getBean(BranchDAO.class);
-//		
+		TypeAssignationsDAO typeAsssignatiosnDAO = context.getBean(TypeAssignationsDAO.class);
 //		Branch branch = new Branch();
 //		branch.setDescription("PRUEBA");
-//		
+		TypeAssignations type=typeAsssignatiosnDAO.loadById(1);
+		System.out.println(type.toString());
 //		branchDAO.save(branch);
 //		System.out.println("BRANCH - "+ branch.toString());
-//		context.close();
-		 generateMenu();
+		
+	context.close();
+	//	 generateMenu();
 	}
 	
 	public static void generateMenu() {

@@ -24,4 +24,12 @@ public class TypeAssignationsDAOImpl implements TypeAssignationsDAO {
 
 	}
 
+
+	public TypeAssignations loadById(int id) {
+		Session session = this.sessionFactory.openSession();
+		TypeAssignations typeAssignations = (TypeAssignations) session.load(TypeAssignations.class, id);	
+		session.close();
+		return typeAssignations;
+	}
+
 }
