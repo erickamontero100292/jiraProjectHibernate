@@ -5,18 +5,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.jiraproject.model.TypeAssignations;
+import com.jiraproject.util.HibernateUtil;
 
 public class TypeAssignationsDAOImpl implements TypeAssignationsDAO {
-	private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
 
 	public void save(TypeAssignations typeAssignation) {
-		Session session = this.sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
 		
 		session.persist(typeAssignation);
 		tx.commit();
@@ -26,8 +23,11 @@ public class TypeAssignationsDAOImpl implements TypeAssignationsDAO {
 
 
 	public TypeAssignations loadById(int id) {
-		Session session = this.sessionFactory.openSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
+		tx = session.beginTransaction();
 		TypeAssignations typeAssignations = (TypeAssignations) session.load(TypeAssignations.class, id);	
+		//typeAssignations.getIdTypeAsiggnations();
 		session.close();
 		return typeAssignations;
 	}

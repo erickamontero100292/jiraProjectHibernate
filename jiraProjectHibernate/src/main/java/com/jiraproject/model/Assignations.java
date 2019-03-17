@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
@@ -24,8 +25,8 @@ public class Assignations implements Serializable{
 	private int idassignations;
 	private String description;
 	@ManyToOne
-	@JoinColumn (name="idtypeassignations")
-	private TypeAssignations typeAssignations;
+    @JoinColumn(name = "idtypeasignations")
+	private TypeAssignations typeAssignations2;
 	
 	
 	public int getIdassignations() {
@@ -41,15 +42,15 @@ public class Assignations implements Serializable{
 		this.description = description;
 	}
 	public TypeAssignations getTypeAssignations() {
-		return typeAssignations;
+		return typeAssignations2;
 	}
 	public void setTypeAssignations(TypeAssignations typeAssignations) {
-		this.typeAssignations = typeAssignations;
+		this.typeAssignations2 = typeAssignations;
 	}
 	@Override
 	public String toString() {
 		return "Assignations [idassignations=" + idassignations + ", description=" + description + ", typeAssignations="
-				+ typeAssignations + "]";
+				+ typeAssignations2.toString() + "]";
 	}
 	
 

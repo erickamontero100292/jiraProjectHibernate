@@ -4,5 +4,5 @@ import com.jiraproject.model.Branch;
 
 public interface BranchDAO {
 	
-	void save(Branch branch);
+	boolean save(Branch branch);
 }

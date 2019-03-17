@@ -1,13 +1,17 @@
 package com.jiraproject.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,7 +31,13 @@ public class TypeAssignations implements Serializable{
 	private int idTypeAsiggnations;
 	private String 	description;
 	
-	@OneToMany(mappedBy = "typeAssignations")
+	//@OneToMany(cascade = CascadeType.ALL,	        orphanRemoval = true)
+	//@JoinColumn(name = "idtypeassignations")
+	 @OneToMany(
+		        mappedBy = "typeAssignations2",
+		        cascade = CascadeType.ALL,
+		        orphanRemoval = true
+		    )
 	private Set<Assignations> setAssignations;
 	
 	
@@ -43,9 +53,17 @@ public class TypeAssignations implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public Set<Assignations> getSetAssignations() {
+		return setAssignations;
+	}
+	public void setSetAssignations(Set<Assignations> setAssignations) {
+		this.setAssignations = setAssignations;
+	}
 	@Override
 	public String toString() {
-		return "TypeAssignations [idTypeAsiggnations=" + idTypeAsiggnations + ", description=" + description + "]";
+		return "TypeAssignations [idTypeAsiggnations=" + idTypeAsiggnations + ", description=" + description
+				+ ", setAssignations=" + setAssignations.toString() + "]";
 	}
 	
 	

@@ -5,18 +5,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.jiraproject.model.Assignations;
+import com.jiraproject.util.HibernateUtil;
 
 public class AssignationsDAOImpl implements AssignationsDAO {
 
-	private SessionFactory sessionFactory;
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	
 	public void save(Assignations assignations) {
 		// TODO Auto-generated method stub
-		Session session = this.sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
 		
 		session.persist(assignations);
 		tx.commit();
