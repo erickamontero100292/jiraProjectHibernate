@@ -1,4 +1,4 @@
-package com.jiraproject.dao;
+package com.jiraproject.daoimpl;
 
 
 
@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import com.jiraproject.interfacedao.BranchDAO;
 import com.jiraproject.model.Branch;
 import com.jiraproject.util.HibernateUtil;
 

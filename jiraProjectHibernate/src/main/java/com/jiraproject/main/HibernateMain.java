@@ -9,10 +9,10 @@ import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.jiraproject.dao.AssignationsDAO;
-import com.jiraproject.dao.BranchDAO;
-import com.jiraproject.dao.BranchDAOImpl;
-import com.jiraproject.dao.TypeAssignationsDAO;
+import com.jiraproject.daoimpl.BranchDAOImpl;
+import com.jiraproject.interfacedao.AssignationsDAO;
+import com.jiraproject.interfacedao.BranchDAO;
+import com.jiraproject.interfacedao.TypeAssignationsDAO;
 import com.jiraproject.model.Branch;
 import com.jiraproject.model.TypeAssignations;
 

@@ -1,4 +1,4 @@
-package com.jiraproject.dao;
+package com.jiraproject.interfacedao;
 
 import com.jiraproject.model.Assignations;
 

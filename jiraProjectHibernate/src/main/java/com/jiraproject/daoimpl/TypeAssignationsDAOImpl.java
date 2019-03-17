@@ -1,9 +1,10 @@
-package com.jiraproject.dao;
+package com.jiraproject.daoimpl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import com.jiraproject.interfacedao.TypeAssignationsDAO;
 import com.jiraproject.model.TypeAssignations;
 import com.jiraproject.util.HibernateUtil;
 
