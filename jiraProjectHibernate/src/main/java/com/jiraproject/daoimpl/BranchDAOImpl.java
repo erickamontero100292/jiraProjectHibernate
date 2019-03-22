@@ -1,5 +1,7 @@
 package com.jiraproject.daoimpl;
 
+import java.util.List;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -7,6 +9,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.jiraproject.interfacedao.BranchDAO;
 import com.jiraproject.model.Branch;
@@ -31,7 +34,7 @@ public class BranchDAOImpl implements BranchDAO {
 			if (tx != null) {
 				tx.rollback();
 			}
-			e.printStackTrace();
+			System.out.println("El nombre del branch ya existe ");
 		} finally {
 			session.close();
 		}
@@ -56,6 +59,7 @@ public class BranchDAOImpl implements BranchDAO {
 			if (tx != null) {
 				tx.rollback();
 			}
+			System.out.println("El nombre del branch ya existe ");
 
 		} finally {
 			session.close();
@@ -109,5 +113,27 @@ public class BranchDAOImpl implements BranchDAO {
 			session.close();
 		}
 		return branch;
+	}
+
+	@Override
+	public List<Branch> loadBrachAll() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
+		 List<Branch> listBranch = null; 
+		try{
+			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery <Branch> criteria= builder.createQuery(Branch.class);
+			Root<Branch> root = criteria.from(Branch.class);
+			criteria.select(root);
+			listBranch = session.createQuery(criteria).getResultList();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return listBranch;
 	}
 }

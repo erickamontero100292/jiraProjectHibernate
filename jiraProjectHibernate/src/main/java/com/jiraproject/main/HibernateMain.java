@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -83,7 +85,10 @@ public class HibernateMain {
 			updateBranch();
 			generateMenu();
 			break;
-
+		case 4:
+			loadBranch();
+			generateMenu();
+			break;
 
 		default:
 			generateMenu();
@@ -104,8 +109,11 @@ public class HibernateMain {
 		branch.setDatecreated(new Timestamp(date.getTime()));
 		BranchDAO branchDAO = new BranchDAOImpl();
 		boolean save = branchDAO.save(branch);
-
-		System.out.println("BRANCH - "+ save+ " - "+branch.toString());
+		if(save) {
+			System.out.println("Se guardo el branch  - "+branch.getDescription());
+		}else {
+			createBranch();
+		}
 
 	}
 	
@@ -114,16 +122,21 @@ public class HibernateMain {
 		String branchName ;
 		String nameNew;
 
-		System.out.println("Introduzca el nombre del branch");
+		System.out.println("Introduzca el nombre del branch que quiere modificar");
 		branchName = value.nextLine();
 		BranchDAO branchDAO = new BranchDAOImpl();
 		Branch branchBD = branchDAO.loadByDescription(branchName);
 		System.out.println("Introduzca el nuevo nombre del branch");
 		nameNew = value.nextLine();
+		Date date = new Date();
 		branchBD.setDescription(nameNew);
+		branchBD.setDatecreated(new Timestamp(date.getTime()));
 		boolean update = branchDAO.update(branchBD);
-		//System.out.println(branchBD.toString());
-		System.out.println("BRANCH - "+ update+ " - "+branchBD.toString());
+		if(update) {
+			System.out.println("Se guardo el branch  - "+branchBD.getDescription());
+		}else {
+			updateBranch();
+		}
 
 	}
 
@@ -142,6 +155,22 @@ public class HibernateMain {
 		boolean delete = branchDAO.update(branch);
 
 		System.out.println("BRANCH - "+ delete+ " - "+branch.toString());
+		
+	}
+	
+	public static void loadBranch() {
+		
+		BranchDAO branchDAO = new BranchDAOImpl();
+		List <Branch> list = branchDAO.loadBrachAll();
+		Iterator iterator = list.iterator();
+		
+		while(iterator.hasNext()) {
+			Branch branch =(Branch) iterator.next();
+			System.out.println("Nombre Branch: " +branch.getDescription());
+		}
+		
+		System.out.println("Total de branch creados: " + list.size());
+
 		
 	}
 	public static void createTypeAssignations() {

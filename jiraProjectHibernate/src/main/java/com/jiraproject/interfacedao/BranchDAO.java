@@ -1,5 +1,7 @@
 package com.jiraproject.interfacedao;
 
+import java.util.List;
+
 import com.jiraproject.model.Branch;
 
 public interface BranchDAO {
@@ -11,5 +13,7 @@ public interface BranchDAO {
 	boolean delete(Branch branch);
 	
 	Branch loadByDescription (String description);
+	
+	List<Branch> loadBrachAll ();
 	
 }
