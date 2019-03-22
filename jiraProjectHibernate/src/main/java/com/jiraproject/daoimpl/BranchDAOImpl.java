@@ -1,5 +1,7 @@
 package com.jiraproject.daoimpl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -134,6 +136,6 @@ public class BranchDAOImpl implements BranchDAO {
 		finally {
 			session.close();
 		}
-		return listBranch;
+		return Collections.unmodifiableList(listBranch);
 	}
 }
