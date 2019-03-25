@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -84,6 +85,7 @@ public class BranchDAOImpl implements BranchDAO {
 			if (tx != null) {
 				tx.rollback();
 			}
+			System.out.println("El nombre del branch ya existe ");
 		} finally {
 			session.close();
 
@@ -97,11 +99,11 @@ public class BranchDAOImpl implements BranchDAO {
 		Branch branch = null;
 
 		try {
-			
+
 			tx = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery <Branch> criteria = builder.createQuery(Branch.class);
-			Root <Branch>  root = criteria.from(Branch.class);
+			CriteriaQuery<Branch> criteria = builder.createQuery(Branch.class);
+			Root<Branch> root = criteria.from(Branch.class);
 			criteria.select(root);
 			criteria.where(builder.equal(root.get(Branch_.description), description));
 			branch = session.createQuery(criteria).getSingleResult();
@@ -110,8 +112,7 @@ public class BranchDAOImpl implements BranchDAO {
 				tx.rollback();
 			}
 
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 		return branch;
@@ -120,22 +121,56 @@ public class BranchDAOImpl implements BranchDAO {
 	@Override
 	public List<Branch> loadBrachAll() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = null;
-		 List<Branch> listBranch = null; 
-		try{
-			
+		List<Branch> listBranch = null;
+		try {
+
 			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery <Branch> criteria= builder.createQuery(Branch.class);
+			CriteriaQuery<Branch> criteria = builder.createQuery(Branch.class);
 			Root<Branch> root = criteria.from(Branch.class);
 			criteria.select(root);
 			listBranch = session.createQuery(criteria).getResultList();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 		return Collections.unmodifiableList(listBranch);
+	}
+
+	/*
+	 * @Override public Branch loadById(int id) {
+	 * 
+	 * Session session = HibernateUtil.getSessionFactory().openSession(); Branch
+	 * branch = null; try{ TypedQuery<Branch> query
+	 * =session.createQuery("SELECT B FROM BRANCHES WHERE b.idbranches =:id",Branch.
+	 * class); query.setParameter("id", id); branch = query.getSingleResult();
+	 * }catch (Exception e) { e.printStackTrace(); } finally { session.close(); }
+	 * return branch; }
+	 */
+
+	@Override
+	public Branch loadById(int id) {
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Branch branch = null;
+		Branch branchNew = new Branch();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+
+			branch = session.load(Branch.class, id);
+			transaction.commit();
+			branchNew = new Branch(branch.getIdBranches(),branch.getDescription(),branch.getDatecreated());
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
+
+		} finally {
+			session.close();
+		}
+		return branchNew;
 	}
 }

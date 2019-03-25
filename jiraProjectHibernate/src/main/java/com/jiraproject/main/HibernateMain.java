@@ -1,6 +1,5 @@
 package com.jiraproject.main;
 
-
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -21,7 +20,7 @@ import com.jiraproject.model.TypeAssignations;
 public class HibernateMain {
 
 	public static void main(String[] args) {
-			 generateMenu();
+		generateMenu();
 	}
 
 	public static void generateMenu() {
@@ -32,10 +31,10 @@ public class HibernateMain {
 		System.out.println("1 - Menu tipo de asignacion");
 		System.out.println("2 - Menu branch");
 		System.out.println("3 - Menu asignacion");
-		option= valueMenu.nextInt();
-		optionSwithMenu( option);
+		option = valueMenu.nextInt();
+		optionSwithMenu(option);
 	}
-	
+
 	public static void generateMenuBranch() {
 
 		Scanner valueMenu = new Scanner(System.in);
@@ -45,8 +44,8 @@ public class HibernateMain {
 		System.out.println("2 - Actualizar branch");
 		System.out.println("3 - Eliminar branch");
 		System.out.println("4 - Listar branch");
-		option= valueMenu.nextInt();
-		optionSwithMenuBranch( option);
+		option = valueMenu.nextInt();
+		optionSwithMenuBranch(option);
 	}
 
 	public static void optionSwithMenu(int option) {
@@ -54,22 +53,22 @@ public class HibernateMain {
 		switch (option) {
 		case 1:
 			createTypeAssignations();
-			//System.out.println("Crear tipo de asignacion");
+			// System.out.println("Crear tipo de asignacion");
 			break;
 		case 2:
 			generateMenuBranch();
-			//System.out.println("Crear branch");
+			// System.out.println("Crear branch");
 			break;
 		case 3:
 			System.out.println("Crear asignacion");
 			break;
-
 
 		default:
 			System.out.println("La opcion no existe");
 			break;
 		}
 	}
+
 	public static void optionSwithMenuBranch(int option) {
 
 		switch (option) {
@@ -82,7 +81,7 @@ public class HibernateMain {
 			generateMenu();
 			break;
 		case 3:
-			updateBranch();
+			deleteBranch();
 			generateMenu();
 			break;
 		case 4:
@@ -91,14 +90,15 @@ public class HibernateMain {
 			break;
 
 		default:
-			generateMenu();
+			// generateMenu();
+			pruebaBranch();
 			break;
 		}
 	}
 
 	public static void createBranch() {
-		Scanner value =   new Scanner(System.in);
-		String branchName ;
+		Scanner value = new Scanner(System.in);
+		String branchName;
 
 		System.out.println("Introduzca el nombre del branch");
 		branchName = value.nextLine();
@@ -109,17 +109,17 @@ public class HibernateMain {
 		branch.setDatecreated(new Timestamp(date.getTime()));
 		BranchDAO branchDAO = new BranchDAOImpl();
 		boolean save = branchDAO.save(branch);
-		if(save) {
-			System.out.println("Se guardo el branch  - "+branch.getDescription());
-		}else {
+		if (save) {
+			System.out.println("Se guardo el branch  - " + branch.getDescription());
+		} else {
 			createBranch();
 		}
 
 	}
-	
+
 	public static void updateBranch() {
-		Scanner value =   new Scanner(System.in);
-		String branchName ;
+		Scanner value = new Scanner(System.in);
+		String branchName;
 		String nameNew;
 
 		System.out.println("Introduzca el nombre del branch que quiere modificar");
@@ -132,56 +132,72 @@ public class HibernateMain {
 		branchBD.setDescription(nameNew);
 		branchBD.setDatecreated(new Timestamp(date.getTime()));
 		boolean update = branchDAO.update(branchBD);
-		if(update) {
-			System.out.println("Se guardo el branch  - "+branchBD.getDescription());
-		}else {
+		if (update) {
+			System.out.println("Se guardo el branch  - " + branchBD.getDescription());
+		} else {
 			updateBranch();
 		}
 
 	}
 
 	public static void deleteBranch() {
-		Scanner value =   new Scanner(System.in);
-		String branchName ;
+		Scanner value = new Scanner(System.in);
+		String branchName;
 
-		System.out.println("Introduzca el nombre del branch");
+		System.out.println("Introduzca el nombre del branch a eliminar");
 		branchName = value.nextLine();
-
-		Date date = new Date();
-		Branch branch = new Branch();
-		branch.setDescription(branchName);
-		branch.setDatecreated(new Timestamp(date.getTime()));
 		BranchDAO branchDAO = new BranchDAOImpl();
-		boolean delete = branchDAO.update(branch);
+		Branch branchBD = branchDAO.loadByDescription(branchName);
+		boolean delete = branchDAO.delete(branchBD);
 
-		System.out.println("BRANCH - "+ delete+ " - "+branch.toString());
-		
-	}
-	
-	public static void loadBranch() {
-		
-		BranchDAO branchDAO = new BranchDAOImpl();
-		List <Branch> list = branchDAO.loadBrachAll();
-		Iterator iterator = list.iterator();
-		
-		while(iterator.hasNext()) {
-			Branch branch =(Branch) iterator.next();
-			System.out.println("Nombre Branch: " +branch.getDescription());
+		if (delete) {
+			System.out.println("Se elimino el branch  - " + branchName);
+		} else {
+			deleteBranch();
 		}
-		
+
+	}
+
+	public static void loadBranch() {
+
+		BranchDAO branchDAO = new BranchDAOImpl();
+		List<Branch> list = branchDAO.loadBrachAll();
+		Iterator iterator = list.iterator();
+
+		while (iterator.hasNext()) {
+			Branch branch = (Branch) iterator.next();
+			System.out.println("Nombre Branch: " + branch.getDescription());
+		}
+
 		System.out.println("Total de branch creados: " + list.size());
 
-		
 	}
+
 	public static void createTypeAssignations() {
-		Scanner value =   new Scanner(System.in);
-		String typeAssignationsName ;
+		Scanner value = new Scanner(System.in);
+		String typeAssignationsName;
 
 		System.out.println("Introduzca el nombre del tipo de asignacion");
 		typeAssignationsName = value.nextLine();
 		TypeAssignations assignations = new TypeAssignations();
 		assignations.setDescription(typeAssignationsName);
-		System.out.println("Type Assignations - "+ assignations.toString());
+		System.out.println("Type Assignations - " + assignations.toString());
+
+	}
+
+	public static void pruebaBranch() {
+
+		BranchDAO branchDAO = new BranchDAOImpl();
+//		List <Branch> list = branchDAO.loadBrachAll();
+		Branch branch = branchDAO.loadById(5);
+		// Iterator iterator = list.iterator();
+
+		/*
+		 * while(iterator.hasNext()) { Branch branch =(Branch) iterator.next();
+		 * System.out.println("Nombre Branch: " +branch.getDescription()); }
+		 */
+
+		System.out.println("Branch pruebaBranch : " + branch.toString());
 
 	}
 

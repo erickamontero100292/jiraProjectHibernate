@@ -14,6 +14,8 @@ public interface BranchDAO {
 	
 	Branch loadByDescription (String description);
 	
+	Branch loadById (int id);
+	
 	List<Branch> loadBrachAll ();
 	
 }

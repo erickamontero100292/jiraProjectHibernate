@@ -46,6 +46,18 @@ public class Branch implements Serializable {
 	public void setDatecreated(Timestamp datecreated) {
 		this.datecreated = datecreated;
 	}
+	
+	
+	public Branch(int idBranches, String description, Timestamp datecreated) {
+		super();
+		this.idBranches = idBranches;
+		this.description = description;
+		this.datecreated = datecreated;
+	}
+	
+	public Branch() {
+		super();
+	}
 	@Override
 	public String toString() {
 		return "Branch [idBranches=" + idBranches + ", description=" + description + ", datecreated=" + datecreated
