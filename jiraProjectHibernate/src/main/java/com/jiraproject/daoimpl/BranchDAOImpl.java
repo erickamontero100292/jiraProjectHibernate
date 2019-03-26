@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 
 import com.jiraproject.interfacedao.BranchDAO;
+import com.jiraproject.messages.Messages;
 import com.jiraproject.model.Branch;
 import com.jiraproject.model.Branch_;
 import com.jiraproject.util.HibernateUtil;
@@ -62,7 +63,7 @@ public class BranchDAOImpl implements BranchDAO {
 			if (tx != null) {
 				tx.rollback();
 			}
-			System.out.println("El nombre del branch ya existe ");
+			System.out.println(Messages.BRANCH_EXIST.getMessage());
 
 		} finally {
 			session.close();
@@ -85,7 +86,7 @@ public class BranchDAOImpl implements BranchDAO {
 			if (tx != null) {
 				tx.rollback();
 			}
-			System.out.println("El nombre del branch ya existe ");
+			System.out.println(Messages.BRANCH_EXIST.getMessage());
 		} finally {
 			session.close();
 

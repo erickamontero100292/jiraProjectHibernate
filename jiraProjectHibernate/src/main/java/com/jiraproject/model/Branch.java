@@ -40,6 +40,11 @@ public class Branch implements Serializable {
 	}
 	
 	
+	public Branch(String description, Timestamp datecreated) {
+		super();
+		this.description = description;
+		this.datecreated = datecreated;
+	}
 	public Timestamp getDatecreated() {
 		return datecreated;
 	}
