@@ -17,8 +17,6 @@ import java.util.Iterator;
 
 public class ExcelReader {
 
-	// public static final String XLSX_FILE_PATH = "C:\\Users\\Ericka
-	// Montero\\Desktop\\historias.xlsx";
 	public static final String XLSX_FILE_PATH = "C:\\Users\\Ericka Montero\\Desktop\\historiasJira.xlsx";
 	public static final String SHEET_BRANCH = "branch";
 	public static final String SHEET_ASSIGNATIONS = "asignations";
@@ -64,7 +62,7 @@ public class ExcelReader {
 		Sheet sheet = workbook.getSheet(nameSheet);// OBTENGO LA HOJA DEL LIBRO
 		switch (nameSheet) {
 		case SHEET_BRANCH:
-			etl(sheet);
+			extractData(sheet);
 			break;
 		case SHEET_TYPE_ASSIGNATIONS:
 			break;
@@ -87,7 +85,7 @@ public class ExcelReader {
 
 	}
 
-	public static void etl(Sheet sheet) throws IOException {
+	public static void extractData(Sheet sheet) throws IOException {
 
 		DataFormatter dataFormatter = new DataFormatter();
 		Iterator<Row> rowIterator = sheet.rowIterator(); // OBTENGO LAS FILAS DE LA HOJA

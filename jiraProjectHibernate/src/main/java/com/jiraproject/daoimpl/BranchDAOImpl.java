@@ -38,7 +38,7 @@ public class BranchDAOImpl implements BranchDAO {
 			if (tx != null) {
 				tx.rollback();
 			}
-			System.out.println("El nombre del branch ya existe ");
+			System.out.println(Messages.BRANCH_EXIST.getMessage());
 		} finally {
 			session.close();
 		}
@@ -47,8 +47,6 @@ public class BranchDAOImpl implements BranchDAO {
 	}
 
 	public boolean update(Branch branch) {
-		// TODO Auto-generated method stub
-
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = null;
 		boolean update = false;

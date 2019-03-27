@@ -19,6 +19,9 @@ import javax.persistence.Table;
 @Table(name="type_assignations")
 public class TypeAssignations implements Serializable{
 
+	public TypeAssignations() {
+		super();
+	}
 	/**
 	 * 
 	 */
@@ -64,6 +67,21 @@ public class TypeAssignations implements Serializable{
 	public String toString() {
 		return "TypeAssignations [idTypeAsiggnations=" + idTypeAsiggnations + ", description=" + description
 				+ ", setAssignations=" + setAssignations.toString() + "]";
+	}
+	public TypeAssignations(String description) {
+		super();
+		this.description = description;
+	}
+	public TypeAssignations(String description, Set<Assignations> setAssignations) {
+		super();
+		this.description = description;
+		this.setAssignations = setAssignations;
+	}
+	public TypeAssignations(int idTypeAsiggnations, String description, Set<Assignations> setAssignations) {
+		super();
+		this.idTypeAsiggnations = idTypeAsiggnations;
+		this.description = description;
+		this.setAssignations = setAssignations;
 	}
 	
 	
