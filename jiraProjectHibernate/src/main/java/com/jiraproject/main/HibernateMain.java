@@ -14,6 +14,7 @@ import com.jiraproject.daoimpl.BranchDAOImpl;
 import com.jiraproject.interfacedao.AssignationsDAO;
 import com.jiraproject.interfacedao.BranchDAO;
 import com.jiraproject.interfacedao.TypeAssignationsDAO;
+import com.jiraproject.messages.Messages;
 import com.jiraproject.model.Branch;
 import com.jiraproject.model.TypeAssignations;
 
@@ -177,7 +178,7 @@ public class HibernateMain {
 		Scanner value = new Scanner(System.in);
 		String typeAssignationsName;
 
-		System.out.println("Introduzca el nombre del tipo de asignacion");
+		System.out.println(Messages.MENU_TYPE_ASSIGNATION.getMessage());
 		typeAssignationsName = value.nextLine();
 		TypeAssignations assignations = new TypeAssignations();
 		assignations.setDescription(typeAssignationsName);
