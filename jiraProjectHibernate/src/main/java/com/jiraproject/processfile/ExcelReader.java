@@ -5,9 +5,12 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
 import com.jiraproject.daoimpl.BranchDAOImpl;
+import com.jiraproject.daoimpl.TypeAssignationsDAOImpl;
 import com.jiraproject.interfacedao.BranchDAO;
+import com.jiraproject.interfacedao.TypeAssignationsDAO;
 import com.jiraproject.messages.Messages;
 import com.jiraproject.model.Branch;
+import com.jiraproject.model.TypeAssignations;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,13 +25,13 @@ public class ExcelReader {
 	public static final String SHEET_ASSIGNATIONS = "asignations";
 	public static final String SHEET_TYPE_ASSIGNATIONS = "asignationType";
 	public static final BranchDAO branchDAO = new BranchDAOImpl();
+	public static final TypeAssignationsDAO typeAssignationsDAO = new TypeAssignationsDAOImpl();
 
 	public static void main(String[] args) {
 		try {
 			Workbook workbook = createFile(XLSX_FILE_PATH);
 			processInformation(workbook, SHEET_BRANCH);
 			System.out.println("---------------------------------------");
-
 			processInformation(workbook, SHEET_TYPE_ASSIGNATIONS);
 			System.out.println("---------------------------------------");
 			processInformation(workbook, SHEET_ASSIGNATIONS);
@@ -62,9 +65,12 @@ public class ExcelReader {
 		Sheet sheet = workbook.getSheet(nameSheet);// OBTENGO LA HOJA DEL LIBRO
 		switch (nameSheet) {
 		case SHEET_BRANCH:
+			System.out.println("SHEET_BRANCH");
 			extractData(sheet);
 			break;
 		case SHEET_TYPE_ASSIGNATIONS:
+			System.out.println("SHEET_TYPE_ASSIGNATIONS");
+			extractData(sheet);
 			break;
 		case SHEET_ASSIGNATIONS:
 			break;
@@ -99,9 +105,9 @@ public class ExcelReader {
 					Cell cell = cellIterator.next();
 					String cellValue = dataFormatter.formatCellValue(cell);
 					transformationData(cellValue, sheet.getSheetName());
-					System.out.print(cellValue + "\t");
+					//System.out.print(cellValue + "\t");
 				}
-				System.out.println();
+				//System.out.println();
 
 			}
 		}
@@ -118,6 +124,8 @@ public class ExcelReader {
 			loadData(branch);
 			break;
 		case SHEET_TYPE_ASSIGNATIONS:
+			TypeAssignations typeAssignations = new TypeAssignations(cellValue);
+			loadData(typeAssignations);
 			break;
 		case SHEET_ASSIGNATIONS:
 			break;
@@ -132,7 +140,15 @@ public class ExcelReader {
 			Branch branch = (Branch) model;
 			boolean save = branchDAO.save(branch);
 			if (save) {
-				System.out.println("Se guardo el branch  - " + branch.getDescription());
+				System.out.println(Messages.SAVE_BRANCH.getMessage()+ branch.getDescription());
+			}
+		}
+
+		if (model instanceof TypeAssignations) {
+			TypeAssignations typeAssignations = (TypeAssignations) model;
+			boolean save = typeAssignationsDAO.save(typeAssignations);
+			if (save) {
+				System.out.println(Messages.SAVE_TYPE_ASSIGNATION.getMessage()+ typeAssignations.getDescription());
 			}
 		}
 	}
