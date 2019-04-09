@@ -14,6 +14,8 @@ import com.jiraproject.daoimpl.BranchDAOImpl;
 import com.jiraproject.interfacedao.AssignationsDAO;
 import com.jiraproject.interfacedao.BranchDAO;
 import com.jiraproject.interfacedao.TypeAssignationsDAO;
+import com.jiraproject.menu.Menu;
+import com.jiraproject.menu.OptionMenu;
 import com.jiraproject.messages.Messages;
 import com.jiraproject.model.Branch;
 import com.jiraproject.model.TypeAssignations;
@@ -25,49 +27,41 @@ public class HibernateMain {
 	}
 
 	public static void generateMenu() {
-
-		Scanner valueMenu = new Scanner(System.in);
-		int option = -1;
-		System.out.println("Introduzca el numero de la opcion que quiere realizar");
-		System.out.println("1 - Menu tipo de asignacion");
-		System.out.println("2 - Menu branch");
-		System.out.println("3 - Menu asignacion");
-		option = valueMenu.nextInt();
-		optionSwithMenu(option);
+		Menu.generateMainMenu();
+		int option = getOptionMenu();
+		generateSwithMenu(option);
 	}
 
-	public static void generateMenuBranch() {
-
+	private static int getOptionMenu() {
 		Scanner valueMenu = new Scanner(System.in);
 		int option = -1;
-		System.out.println("Introduzca el numero de la opcion que quiere realizar");
-		System.out.println("1 - Crear branch");
-		System.out.println("2 - Actualizar branch");
-		System.out.println("3 - Eliminar branch");
-		System.out.println("4 - Listar branch");
 		option = valueMenu.nextInt();
-		optionSwithMenuBranch(option);
+		return option;
 	}
 
-	public static void optionSwithMenu(int option) {
+	public static void generateSwithMenu(int option) {
 
 		switch (option) {
 		case 1:
 			createTypeAssignations();
-			// System.out.println("Crear tipo de asignacion");
 			break;
 		case 2:
 			generateMenuBranch();
-			// System.out.println("Crear branch");
+			
 			break;
 		case 3:
 			System.out.println("Crear asignacion");
 			break;
 
 		default:
-			System.out.println("La opcion no existe");
+			Menu.generateMenuOptionNoExist();
 			break;
 		}
+	}
+	public static void generateMenuBranch() {
+		Menu.generateOptionMenu(OptionMenu.BRANCH.getOption());
+		int option = getOptionMenu();
+		optionSwithMenuBranch(option);
 	}
 
 	public static void optionSwithMenuBranch(int option) {

@@ -18,5 +18,5 @@ public enum Messages {
 		return message;
 	}
 
-	
 }
+

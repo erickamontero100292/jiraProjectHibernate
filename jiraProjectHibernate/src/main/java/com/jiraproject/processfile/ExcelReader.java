@@ -105,9 +105,7 @@ public class ExcelReader {
 					Cell cell = cellIterator.next();
 					String cellValue = dataFormatter.formatCellValue(cell);
 					transformationData(cellValue, sheet.getSheetName());
-					//System.out.print(cellValue + "\t");
 				}
-				//System.out.println();
 
 			}
 		}
