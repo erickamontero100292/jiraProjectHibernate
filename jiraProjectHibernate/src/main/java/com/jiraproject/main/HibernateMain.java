@@ -23,23 +23,23 @@ import com.jiraproject.model.TypeAssignations;
 public class HibernateMain {
 
 	public static void main(String[] args) {
-		generateMenu();
+		Menu.generateMenu();
 	}
 
-	public static void generateMenu() {
+	/*public static void generateMenu() {
 		Menu.generateMainMenu();
-		int option = getOptionMenu();
-		generateSwithMenu(option);
-	}
+		int option = Menu.getOptionMenu();
+		Menu.generateSwithMenu(option);
+	}*/
 
-	private static int getOptionMenu() {
+	/*private static int getOptionMenu() {
 		Scanner valueMenu = new Scanner(System.in);
 		int option = -1;
 		option = valueMenu.nextInt();
 		return option;
-	}
+	}*/
 
-	public static void generateSwithMenu(int option) {
+	/*public static void generateSwithMenu(int option) {
 
 		switch (option) {
 		case 1:
@@ -57,14 +57,14 @@ public class HibernateMain {
 			Menu.generateMenuOptionNoExist();
 			break;
 		}
-	}
-	public static void generateMenuBranch() {
+	}*/
+	/*public static void generateMenuBranch() {
 		Menu.generateOptionMenu(OptionMenu.BRANCH.getOption());
-		int option = getOptionMenu();
+		int option = Menu.getOptionMenu();
 		optionSwithMenuBranch(option);
 	}
 
-	public static void optionSwithMenuBranch(int option) {
+	/*public static void optionSwithMenuBranch(int option) {
 
 		switch (option) {
 		case 1:
@@ -89,7 +89,7 @@ public class HibernateMain {
 			pruebaBranch();
 			break;
 		}
-	}
+	}*/
 
 	public static void createBranch() {
 		Scanner value = new Scanner(System.in);
