@@ -25,13 +25,13 @@ public class Menu {
 	}
 	
 	public static void generateMenu() {
-		generateMainMenu();
+		mainMenu();
 		int option = Menu.getOptionMenu();
-		generateSwithMenu(option);
+		optionsMenu(option);
 	}
 	
 	
-	public static void generateMainMenu() {
+	public static void mainMenu() {
 		System.out.println("Introduzca el numero de la opcion que quiere realizar");
 		System.out.println("1 - Menu tipo de asignacion");
 		System.out.println("2 - Menu branch");
@@ -39,7 +39,7 @@ public class Menu {
 		System.out.println("4 - Salir");
 	}
 	
-	public static void generateOptionMenu(String option) {
+	public static void generateDetailDescriptionOptionMenu(String option) {
 		System.out.println("Introduzca el numero de la opcion que quiere realizar");
 		System.out.println("1 - Crear "+ option);
 		System.out.println("2 - Actualizar " + option);
@@ -52,18 +52,17 @@ public class Menu {
 		System.out.println("La opcion no existe");
 	}
 	
-	public static void generateSwithMenu(int option) {
+	public static void optionsMenu(int option) {
 
 		switch (option) {
 		case 1:
-			generateMenuSpecific(OptionMenu.TYPE_ASSIGNATION.getOption());
+			generateDetailOptionMenu(OptionMenu.TYPE_ASSIGNATION.getOption());
 			break;
 		case 2:
-			generateMenuSpecific(OptionMenu.BRANCH.getOption());
-			
+			generateDetailOptionMenu(OptionMenu.BRANCH.getOption());
 			break;
 		case 3:
-			generateMenuSpecific(OptionMenu.ASSIGNATION.getOption());
+			generateDetailOptionMenu(OptionMenu.ASSIGNATION.getOption());
 			break;
 		case 4:
 			System.exit(0);
@@ -75,10 +74,10 @@ public class Menu {
 		}
 	}
 	
-	public static void generateMenuSpecific(String optionName) {
-		generateOptionMenu(optionName);
+	public static void generateDetailOptionMenu(String optionName) {
+		generateDetailDescriptionOptionMenu(optionName);
 		int option = getOptionMenu();
-		optionSwithMenuBranch(option);
+		optionSpecificDetailMenu(option,optionName);
 	}
 	
 	public static int getOptionMenu() {
@@ -88,11 +87,13 @@ public class Menu {
 		return option;
 	}
 	
-	public static void optionSwithMenuBranch(int option) {
+	public static void optionSpecificDetailMenu(int option,String optionName) {
 
 		switch (option) {
 		case 1:
-			create();
+			OptionDetailMenu opyi =FactoryOptionMenu.getOptionDetail(optionName);
+			opyi.create();
+			//create();
 			generateMenu();
 			break;
 		case 2:
