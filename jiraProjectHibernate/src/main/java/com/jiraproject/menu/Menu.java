@@ -1,5 +1,6 @@
 package com.jiraproject.menu;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Scanner;
@@ -7,6 +8,9 @@ import java.util.Scanner;
 import com.jiraproject.daoimpl.BranchDAOImpl;
 import com.jiraproject.interfacedao.BranchDAO;
 import com.jiraproject.model.Branch;
+import com.jiraproject.processfile.ExcelReader;
+
+import javax.swing.*;
 
 /**
  * @author Ericka Montero
@@ -48,6 +52,16 @@ public class Menu {
         switch (option) {
             case 1:
                 //TODO CREATE METHOD GENERATE WINDOWS
+                WindowFile windowFile = new WindowFile();
+                int seleccion = windowFile.selectionFile();
+                if (seleccion == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = windowFile.getSelectedFile();
+                    boolean validate = ExcelReader.readFileExcel(selectedFile);
+                    if(!validate){
+                        System.exit(0);
+                    }
+
+                }
                 break;
             case 2:
                 descriptionManualInsertionMenu();
@@ -61,6 +75,7 @@ public class Menu {
                 Menu.generateMenu();
                 break;
         }
+
     }
 
     public static void optionsManualInsertions(int option) {
