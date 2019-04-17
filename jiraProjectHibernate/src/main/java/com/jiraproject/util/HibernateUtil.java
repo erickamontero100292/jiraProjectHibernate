@@ -15,7 +15,7 @@ public class HibernateUtil {
             // Para Hibernate 5.x 
             // Crear SessionFactory desde hibernate.cfg.xml
             
-            StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("com/jiraproject/resources/hibernate.cfg.xml").build();
+            StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
             Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
             return metadata.getSessionFactoryBuilder().build();
             

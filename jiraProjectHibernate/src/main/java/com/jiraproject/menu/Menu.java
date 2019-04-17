@@ -56,8 +56,12 @@ public class Menu {
                 int seleccion = windowFile.selectionFile();
                 if (seleccion == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = windowFile.getSelectedFile();
-                    boolean validate = ExcelReader.readFileExcel(selectedFile);
-                    if(!validate){
+                    boolean stateReadFile = ExcelReader.readFileExcel(selectedFile);
+                    if(stateReadFile){
+                        System.out.println("Importacion exitosa");
+                        System.exit(0);
+                    }else{
+                        System.out.println("Formato de archivo no valido");
                         System.exit(0);
                     }
 

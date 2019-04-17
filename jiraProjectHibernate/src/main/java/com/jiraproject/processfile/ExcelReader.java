@@ -41,8 +41,6 @@ public class ExcelReader {
                 System.out.println("---------------------------------------");
                 processInformation(workbook, SHEET_ASSIGNATIONS);
                 validateRead=true;
-            }else{
-                System.out.println("Formato no valido");
             }
         } catch (IOException io) {
             io.printStackTrace();
