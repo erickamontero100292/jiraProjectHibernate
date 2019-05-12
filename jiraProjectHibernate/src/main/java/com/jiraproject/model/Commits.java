@@ -58,4 +58,7 @@ public class Commits implements Serializable {
     public void setAssignations(Assignations assignations) {
         this.assignations = assignations;
     }
+
+    public Commits() {
+    }
 }
