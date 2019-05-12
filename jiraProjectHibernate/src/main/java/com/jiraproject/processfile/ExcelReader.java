@@ -1,6 +1,5 @@
 package com.jiraproject.processfile;
 
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
@@ -93,7 +92,7 @@ public class ExcelReader {
 
     }
 
-    private static String getPathComplete(String path, String fileName) {
+    public static String getPathComplete(String path, String fileName) {
         StringBuilder pathAndFile = new StringBuilder();
         pathAndFile.append(path).append(FILE_SEPARATOR).append(fileName);
         return pathAndFile.toString();
