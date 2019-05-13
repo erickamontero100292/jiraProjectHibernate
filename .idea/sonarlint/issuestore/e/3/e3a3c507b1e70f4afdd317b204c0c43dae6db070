@@ -1,0 +1,31 @@
+
+T
+squid:S106/"9Replace this use of System.out or System.err by a logger.(Ã´†ƒøÿÿÿÿ
+nsquid:S2259&"R"NullPointerException" will be thrown when invoking method "processInformation()".(³üÛÉıÿÿÿÿ
+?squid:S1148W"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+:squid:S1148."#Use a logger to log this exception.(Í‚õÃ
+[squid:S2147X"DCombine this catch with the one at line 86, which has the same body.(îæ³
+P
+squid:S106•"9Replace this use of System.out or System.err by a logger.(Á·¹†
+O
+squid:S106A"9Replace this use of System.out or System.err by a logger.(ª±…Š
+Osquid:S1135"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+?squid:S1148Y"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+osquid:UselessImportCheck"FRemove this unused import 'org.apache.poi.EncryptedDocumentException'.(éŞõ¥øÿÿÿÿ
+gsquid:CommentedOutCodeLineT"<This block of commented-out lines of code should be removed.(·‡É¼üÿÿÿÿ
+Qsquid:S1118":Add a private constructor to hide the implicit public one.(·øÇ
+Nsquid:S1135="2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+U
+squid:S106"9Replace this use of System.out or System.err by a logger.(Âàµÿıÿÿÿÿ
+T
+squid:S106)"9Replace this use of System.out or System.err by a logger.(™çšùÿÿÿÿ
+Xsquid:S1075"ARefactor your code to get this URI from a customizable parameter.(ù ş
+Nsquid:S1135|"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+gsquid:CommentedOutCodeLine "<This block of commented-out lines of code should be removed.(»•ûÿÿÿÿ
+¢%squid:RedundantThrowsDeclarationCheckf"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(õíÕ×ıÿÿÿÿ
+O
+squid:S106E"9Replace this use of System.out or System.err by a logger.(É¢­ì
+Ysquid:UnusedPrivateMethod`"4Remove this unused private "getPathComplete" method.(Ùºè”
+Esquid:S1481j")Remove this unused "head" local variable.(œ»Ï´ıÿÿÿÿ
+T
+squid:S106'"9Replace this use of System.out or System.err by a logger.(™çšùÿÿÿÿ

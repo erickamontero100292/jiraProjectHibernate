@@ -3,3 +3,5 @@
 *.xml
 *.iml
 jiraProjectHibernate/target/classes
+jiraProjectHibernate/target/classes/com/jiraproject/messages/Messages.class
+jiraProjectHibernate/target/classes/com/jiraproject/model/*.class
