@@ -5,6 +5,6 @@ import com.jiraproject.model.Assignations;
 
 public interface AssignationsDAO {
 	
-	void save(Assignations assignations);
+	boolean save(Assignations assignations);
 
 }

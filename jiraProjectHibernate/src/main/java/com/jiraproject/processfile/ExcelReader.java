@@ -1,5 +1,8 @@
 package com.jiraproject.processfile;
 
+import com.jiraproject.daoimpl.AssignationsDAOImpl;
+import com.jiraproject.interfacedao.AssignationsDAO;
+import com.jiraproject.model.Assignations;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
@@ -25,21 +28,22 @@ public class ExcelReader {
     public static final String SHEET_TYPE_ASSIGNATIONS = "asignationType";
     public static final BranchDAO branchDAO = new BranchDAOImpl();
     public static final TypeAssignationsDAO typeAssignationsDAO = new TypeAssignationsDAOImpl();
+    public static final AssignationsDAO assignationsDAO = new AssignationsDAOImpl();
     public static final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
     public static final String VALIDATE_EXTENSION = "xlsx";
 
     //	public static void main(String[] args) {
     public static boolean readFileExcel(File file) {
-        boolean validateRead= false;
+        boolean validateRead = false;
         try {
-            if(validateExtensionFile(file.getName())) {
+            if (validateExtensionFile(file.getName())) {
                 Workbook workbook = readFile(file);
                 processInformation(workbook, SHEET_BRANCH);
                 System.out.println("---------------------------------------");
                 processInformation(workbook, SHEET_TYPE_ASSIGNATIONS);
                 System.out.println("---------------------------------------");
                 processInformation(workbook, SHEET_ASSIGNATIONS);
-                validateRead=true;
+                validateRead = true;
             }
         } catch (IOException io) {
             io.printStackTrace();
@@ -50,8 +54,8 @@ public class ExcelReader {
 
     private static boolean validateExtensionFile(String fileName) {
         boolean validate = false;
-        if(fileName.endsWith(VALIDATE_EXTENSION)) {
-            validate= true;
+        if (fileName.endsWith(VALIDATE_EXTENSION)) {
+            validate = true;
         }
         return validate;
     }
@@ -69,6 +73,7 @@ public class ExcelReader {
                 extractData(sheet);
                 break;
             case SHEET_ASSIGNATIONS:
+                extractData(sheet);
                 break;
             default:
                 break;
@@ -80,7 +85,6 @@ public class ExcelReader {
     public static Workbook readFile(File file) {
         Workbook workbook = null;
         try {
-//           String pathFile = getPathComplete(path, fileName);
             workbook = WorkbookFactory.create(file);
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,44 +104,83 @@ public class ExcelReader {
 
     public static void extractData(Sheet sheet) throws IOException {
 
-        DataFormatter dataFormatter = new DataFormatter();
+
         Iterator<Row> rowIterator = sheet.rowIterator(); // OBTENGO LAS FILAS DE LA HOJA
         int head = 0;
 
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next(); // OBTENGO UNA FILA EN ESPECIFICO
             if (row.getRowNum() != 0) {
-                Iterator<Cell> cellIterator = row.cellIterator(); // OBTENGO LAS CELDAS DE ESA FILA
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    String cellValue = dataFormatter.formatCellValue(cell);
-                    transformationData(cellValue, sheet.getSheetName());
-                }
+                transformationData(row, sheet.getSheetName());
 
             }
         }
 
     }
 
-    private static void transformationData(String cellValue, String nameSheet) {
-        // TODO Auto-generated method stub
+    private static void transformationData(Row row, String nameSheet) {
+        String cellValue = null;
         switch (nameSheet) {
             case SHEET_BRANCH:
                 Date date = new Date();
                 Timestamp timestamp = new Timestamp(date.getTime());
+                cellValue = getCellValue(row);
                 Branch branch = new Branch(cellValue, timestamp);
                 loadData(branch);
                 break;
             case SHEET_TYPE_ASSIGNATIONS:
+                cellValue = getCellValue(row);
                 TypeAssignations typeAssignations = new TypeAssignations(cellValue);
                 loadData(typeAssignations);
                 break;
             case SHEET_ASSIGNATIONS:
+                Assignations assignations = new Assignations();
+                assignations = (Assignations) getCellValue(row, assignations);
+                loadData(assignations);
                 break;
             default:
                 break;
         }
     }
+
+    private static String getCellValue(Row row) {
+        String cellValue = "";
+        DataFormatter dataFormatter = new DataFormatter();
+        Iterator<Cell> cellIterator = row.cellIterator(); // OBTENGO LAS CELDAS DE ESA FILA
+        while (cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+            cellValue = dataFormatter.formatCellValue(cell);
+        }
+        return cellValue;
+    }
+
+    private static Object getCellValue(Row row, Object model) {
+        String cellValue = "";
+        DataFormatter dataFormatter = new DataFormatter();
+        Iterator<Cell> cellIterator = row.cellIterator(); // OBTENGO LAS CELDAS DE ESA FILA
+        int i = 0;
+        while (cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+            if (model instanceof Assignations) {
+                model = (Assignations) model;
+                TypeAssignationsDAO assignationsDAO = new TypeAssignationsDAOImpl();
+                cellValue = dataFormatter.formatCellValue(cell);
+                if (i == 0) {
+                    TypeAssignations typeAssignations = assignationsDAO.loadByDescription(cellValue);
+                    ((Assignations) model).setTypeAssignations(typeAssignations);
+                    i++;
+                } else if (i == 1) {
+                    ((Assignations) model).setNameassignation(cellValue);
+                    i++;
+                } else if (i == 2) {
+                    ((Assignations) model).setDescription(cellValue);
+                }
+
+            }
+        }
+        return model;
+    }
+
 
     private static void loadData(Object model) {
         // TODO Auto-generated method stub
@@ -147,13 +190,17 @@ public class ExcelReader {
             if (save) {
                 System.out.println(Messages.SAVE_BRANCH.getMessage() + branch.getDescription());
             }
-        }
-
-        if (model instanceof TypeAssignations) {
+        } else if (model instanceof TypeAssignations) {
             TypeAssignations typeAssignations = (TypeAssignations) model;
             boolean save = typeAssignationsDAO.save(typeAssignations);
             if (save) {
                 System.out.println(Messages.SAVE_TYPE_ASSIGNATION.getMessage() + typeAssignations.getDescription());
+            }
+        } else if (model instanceof Assignations) {
+            Assignations assignations = (Assignations) model;
+            boolean save = assignationsDAO.save(assignations);
+            if (save) {
+                System.out.println(Messages.SAVE_ASSIGNATION.getMessage() + assignations.getDescription());
             }
         }
     }

@@ -31,7 +31,7 @@ public class BranchDAOImpl implements BranchDAO {
 			tx = session.beginTransaction();
 
 			// session.save(branch);//Hibernate
-			session.persist(branch); // JPA
+			session.persist(branch); // JPA la insercion no se produce al instante
 			tx.commit();
 			commit = true;
 		} catch (Exception e) {

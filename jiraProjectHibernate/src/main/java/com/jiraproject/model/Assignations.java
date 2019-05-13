@@ -19,16 +19,12 @@ public class Assignations implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idassignations;
+    private String nameassignation;
     private String description;
     @ManyToOne
     @JoinColumn(name = "idtypeasignations")
     private TypeAssignations typeAssignations2;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "assignations",
-            orphanRemoval = true)
-    private List<Commits> commitsList = new ArrayList<Commits>();
 
     public Assignations() {
     }
@@ -63,5 +59,19 @@ public class Assignations implements Serializable {
                 + typeAssignations2.toString() + "]";
     }
 
+    public TypeAssignations getTypeAssignations2() {
+        return typeAssignations2;
+    }
 
+    public void setTypeAssignations2(TypeAssignations typeAssignations2) {
+        this.typeAssignations2 = typeAssignations2;
+    }
+
+    public String getNameassignation() {
+        return nameassignation;
+    }
+
+    public void setNameassignation(String nameassignation) {
+        this.nameassignation = nameassignation;
+    }
 }

@@ -6,8 +6,10 @@ public enum Messages {
 	TYPE_ASIGNATION_EXIST("La descripcion de la asignacion ya existe "),
 	MENU_TYPE_ASSIGNATION("Introduzca el nombre del tipo de asignacion"),
 	SAVE_BRANCH("Se guardo el branch  - "),
-	SAVE_TYPE_ASSIGNATION("Se guardo el tipo de asignacion  - ");
-	
+	SAVE_TYPE_ASSIGNATION("Se guardo el tipo de asignacion  - "),
+	SAVE_ASSIGNATION("Se guardo la asignacion  - "),
+	ERROR_SAVE ("Error en guardar el objeto - ");
+
 	private Messages(String message) {
 		this.message = message;
 	}

@@ -11,6 +11,7 @@ public abstract class Assignations_ {
 	public static volatile SingularAttribute<Assignations, TypeAssignations> typeAssignations2;
 	public static volatile SingularAttribute<Assignations, String> description;
 	public static volatile SingularAttribute<Assignations, Integer> idassignations;
+	public static volatile SingularAttribute<Assignations, String> nameassignation;
 
 }
 

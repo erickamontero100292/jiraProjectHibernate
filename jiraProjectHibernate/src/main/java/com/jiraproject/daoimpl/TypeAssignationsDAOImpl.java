@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.jiraproject.util.TransformerTypeAssignations;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -100,6 +101,7 @@ public class TypeAssignationsDAOImpl implements TypeAssignationsDAO {
 			CriteriaQuery< TypeAssignations> criteriaQuery = builder.createQuery(TypeAssignations.class);
 			Root<TypeAssignations> root = criteriaQuery.from(TypeAssignations.class);
 			criteriaQuery.select(root);
+			description = evaluateDescription(description);
 			criteriaQuery.where(builder.equal(root.get(TypeAssignations_.description), description));
 			assignationsDB = session.createQuery(criteriaQuery).getSingleResult();
 			assignations = new TypeAssignations(assignationsDB.getIdTypeAsiggnations(), assignationsDB.getDescription(), assignationsDB.getSetAssignations());
@@ -113,6 +115,13 @@ public class TypeAssignationsDAOImpl implements TypeAssignationsDAO {
 			session.close();
 		}
 		return assignations;
+	}
+
+	private String evaluateDescription(String description) {
+		if(description.equalsIgnoreCase(TransformerTypeAssignations.STORY.getAssignationName())){
+			return TransformerTypeAssignations.STORY.getTransformName();
+		}
+		return description;
 	}
 
 	@Override
